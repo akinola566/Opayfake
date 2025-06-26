@@ -1,49 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OPay Transaction Receipt</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OPay Receipt</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      color: #fff;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      background-color: #1a1a1a;
+      border-bottom: 1px solid #333;
+    }
+    .back {
+      font-size: 24px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .title {
+      font-size: 18px;
+      font-weight: 500;
+    }
+    .container {
+      padding: 20px;
+    }
+    .card {
+      background-color: #121212;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    }
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      color: #00e676;
+    }
+    .sub {
+      color: #aaa;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .amount {
+      font-size: 30px;
+      color: #00e676;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .status {
+      color: #00e676;
+      font-size: 18px;
+      margin-top: 5px;
+    }
+    .datetime {
+      font-size: 13px;
+      color: #aaa;
+      margin-bottom: 15px;
+    }
+    .section {
+      margin: 10px 0;
+    }
+    .section-title {
+      font-weight: bold;
+      color: #ddd;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    .section-text {
+      font-size: 13px;
+      color: #ccc;
+      line-height: 1.4;
+    }
+    .note {
+      font-size: 12px;
+      color: #999;
+      margin-top: 15px;
+      border-top: 1px dashed #333;
+      padding-top: 10px;
+    }
+    .share-btns {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+    .btn {
+      padding: 10px 15px;
+      background-color: #00e676;
+      border: none;
+      color: #000;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:active {
+      opacity: 0.8;
+    }
+  </style>
 </head>
 <body>
-  <div class="receipt-container">
-    <div class="receipt-header">
-      <span class="back-arrow">←</span>
-      <h2>Share Receipt</h2>
-    </div>
-    <div class="receipt">
-      <div class="opay-logo">OPay</div>
-      <h3>Transaction Receipt</h3>
+  <div class="header">
+    <div class="back" onclick="history.back()">&#8592;</div>
+    <div class="title">Share Receipt</div>
+  </div>
+
+  <div class="container">
+    <div class="card" id="receiptText">
+      <div class="logo">ⓄPay</div>
+      <div class="sub">Transaction Receipt</div>
       <div class="amount">₦1,500.00</div>
       <div class="status">Successful</div>
       <div class="datetime">Jun 25th, 2025 18:02:51</div>
 
-      <div class="details">
-        <p><strong>Recipient Details</strong><br>
-        SUNNYMYMAN COMMUNICATION NIG LTD - SUNNY MY MAN LIMITED<br>
-        MONIE POINT | 5345269494</p>
-
-        <p><strong>Sender Details</strong><br>
-        ABOSEDE BUSAYO AKINOLA<br>
-        OPay | 913****114</p>
-
-        <p><strong>Transaction No.</strong><br>
-        250625020100449723116591</p>
-
-        <p><strong>Session ID</strong><br>
-        100004250625170257135489125840</p>
+      <div class="section">
+        <div class="section-title">Recipient Details</div>
+        <div class="section-text">
+          SUNNYMYMAN COMMUNICATION NIG LTD - SUNNY MY MAN LIMITED<br>
+          MONIE POINT | 5345269494
+        </div>
       </div>
 
-      <p class="footer-note">
-        Enjoy a better life with OPay. Get free transfers, withdrawals, bill payments, instant loans, and good annual interest On your savings. OPay is licensed by the Central Bank of Nigeria and insured by the NDIC.
-      </p>
+      <div class="section">
+        <div class="section-title">Sender Details</div>
+        <div class="section-text">
+          ABOSEDE BUSAYO AKINOLA<br>
+          OPay | 913****114
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Transaction No.</div>
+        <div class="section-text">250625020100449723116591</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Session ID</div>
+        <div class="section-text">100004250625170257135489125840</div>
+      </div>
+
+      <div class="note">
+        Enjoy a better life with OPay. Get free transfers, withdrawals, bill payments, instant loans, and good annual interest on your savings. OPay is licensed by the Central Bank of Nigeria and insured by the NDIC.
+      </div>
     </div>
 
-    <div class="share-buttons">
-      <button>Share as image</button>
-      <button>Share as PDF</button>
+    <div class="share-btns">
+      <button class="btn" onclick="shareWhatsApp()">Share to WhatsApp</button>
+      <button class="btn" onclick="downloadImage()">Save as Image</button>
     </div>
   </div>
+
+  <script>
+    function shareWhatsApp() {
+      const receipt = document.getElementById("receiptText").innerText;
+      const msg = encodeURIComponent(receipt);
+      const url = `https://wa.me/?text=${msg}`;
+      window.open(url, '_blank');
+    }
+
+    function downloadImage() {
+      html2canvas(document.getElementById("receiptText")).then(canvas => {
+        let link = document.createElement('a');
+        link.download = 'opay_receipt.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+  </script>
+
+  <!-- html2canvas for image download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </body>
-</html>
+        </html>
